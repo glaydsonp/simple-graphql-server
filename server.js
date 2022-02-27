@@ -29,6 +29,14 @@ const toDoSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
+  tags: {
+    type: Array,
+    required: false,
+  },
+  date: {
+    type: String,
+    required: false,
+  },
 });
 
 const ToDo = mongoose.model("ToDo", toDoSchema);
@@ -40,11 +48,15 @@ const typeDefs = gql`
     title: String!
     description: String!
     isTaskDone: Boolean!
+    tags: [String]
+    date: String
   }
   input ToDoInput {
     title: String!
     description: String!
     isTaskDone: Boolean!
+    tags: [String]
+    date: String
   }
   type Query {
     getToDo(toDoId: ID!): ToDo!
@@ -112,7 +124,7 @@ const resolvers = {
   },
 };
 
-const server = new ApolloServer({ typeDefs, resolvers });
+const server = new ApolloServer({ typeDefs, resolvers, cors: false });
 
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {
