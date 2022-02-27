@@ -124,7 +124,11 @@ const resolvers = {
   },
 };
 
-const server = new ApolloServer({ typeDefs, resolvers, cors: false });
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
+  cors: { "access-control-allow-origin": "*" },
+});
 
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {
